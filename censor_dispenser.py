@@ -95,13 +95,23 @@ def ultimate_censor(text, censor_list):
 
       word_before = text_words[i-1]
       for x in punctuation:
-        wrod_before = word_before.strip(x)
+        word_before = word_before.strip(x)
       censored_word_before = ""
       for x in range(0, len(word_before)):
         censored_word_before += "X"
       text_words[i-1] = text_words[i-1].replace(word_before, censored_word_before)
-  return text_words
 
-censor_all = proprietary_terms + negative_words
+# CENSOR WORD AFTER TRGT WORD
 
-print(ultimate_censor(email_four, censor_all))
+      word_after = text_words[i+1]
+      for x in punctuation:
+        word_after = word_after.strip(x)
+      censored_word_after = ""
+      for x in range(0, len(word_after)):
+        censored_word_after += "X"
+      text_words[i+1] = text_words[i+1].replace(word_after, censored_word_after)
+  return " ".join(text_words)
+
+mega_censor = proprietary_terms + negative_words
+
+print(ultimate_censor(email_four, mega_censor))
