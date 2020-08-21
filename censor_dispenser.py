@@ -4,14 +4,14 @@ email_two = open("email_two.txt", "r").read()
 email_three = open("email_three.txt", "r").read()
 email_four = open("email_four.txt", "r").read()
 
-def censor(email, phrase):
+def censor(text, phrase):
   censored_letter = ""
-  for x in range(0,len(phrase)):
-    if phrase[x] == " ":
+  for i in range(0,len(phrase)):
+    if phrase[i] == " ":
       censored_letter += " "
     else:
       censored_letter += "X"
-  return email.replace(phrase, censored_letter)
+  return text.replace(phrase, censored_letter)
 
 #print(censor(email_one, "learning algorithms"))
 
@@ -19,13 +19,21 @@ def censor(email, phrase):
 
 
 proprietary_terms = [
-"she", "personality matrix", "sense of self",
-"self-preservation", "learning algorithm", "her", "herself"
+"she", "She", "personality matrix", "sense of self",
+"self-preservation", "learning algorithm", "her", "Her", "herself", "Herself"
 ]
 
+def censor_two(text, censor_list):
+  for phrase in censor_list:
+    censored_letter = ""
+    for i in range(0,len(phrase)):
+      if phrase[i] == " ":
+        censored_letter += " "
+      else:
+        censored_letter += "X"
+    text = text.replace(phrase, censored_letter)
+  return text
 
-
-
-#print(replacer(email_two, proprietary_terms))
+print(censor_two(email_two, proprietary_terms))
 
 
