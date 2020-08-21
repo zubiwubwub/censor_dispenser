@@ -69,4 +69,29 @@ def negativity_censor(text, censor_list, negative_words):
   return " ".join(text_words)
 
 
-print(negativity_censor(email_three, proprietary_terms, negative_words))
+#print(negativity_censor(email_three, proprietary_terms, negative_words))
+
+def ultimate_censor(text, censor_list):
+  text_words = []
+  for x in text.split(" "):
+    x1 = x.split("\n")
+    for word in x1:
+      text_words.append(word)
+  for i in range(0, len(text_words)):
+    check_word = text_words[i].lower()
+    for x in punctuation:
+      check_word = check_word.strip(x)
+    if check_word in censor_list:
+
+      clean_word = text_words[i]
+      censored_word = ""
+      for x in punctuation:
+        clean_word = clean_word.strip(x)
+      for x in range(0, len(clean_word)):
+        censored_word += "X"
+      text_words[i] = text_words[i].replace(clean_word, censored_word)
+  return text_words
+
+censor_all = proprietary_terms + negative_words
+
+print(ultimate_censor(email_four, censor_all))
