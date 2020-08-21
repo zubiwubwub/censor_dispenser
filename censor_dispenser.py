@@ -82,7 +82,7 @@ def ultimate_censor(text, censor_list):
     for x in punctuation:
       check_word = check_word.strip(x)
     if check_word in censor_list:
-
+# WORD CENSOR
       clean_word = text_words[i]
       censored_word = ""
       for x in punctuation:
@@ -90,6 +90,16 @@ def ultimate_censor(text, censor_list):
       for x in range(0, len(clean_word)):
         censored_word += "X"
       text_words[i] = text_words[i].replace(clean_word, censored_word)
+
+# CENSOR WORD BEFORE TRGT WORD
+
+      word_before = text_words[i-1]
+      for x in punctuation:
+        wrod_before = word_before.strip(x)
+      censored_word_before = ""
+      for x in range(0, len(word_before)):
+        censored_word_before += "X"
+      text_words[i-1] = text_words[i-1].replace(word_before, censored_word_before)
   return text_words
 
 censor_all = proprietary_terms + negative_words
