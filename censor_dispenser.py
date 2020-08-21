@@ -25,6 +25,8 @@ proprietary_terms = [
 
 negative_words = ["concerned", "behind", "danger", "dangerous", "alarming", "alarmed", "out of control", "help", "unhappy", "bad", "upset", "awful", "broken", "damage", "damaging", "dismal", "distressed", "distressed", "concerning", "horrible", "horribly", "questionable"]
 
+punctuation = [",", "!", "?", ".", "%", "/", "(", ")"]
+
 def censor_list(text, censor_list):
   for phrase in censor_list: #went through the proprietary_terms list
     censored_letter = ""
@@ -39,13 +41,32 @@ def censor_list(text, censor_list):
 #print(censor_list(email_two, proprietary_terms))
 
 
-def negativity_censor(text, censor_list,  negative_words):
+def negativity_censor(text, censor_list, negative_words):
   text_words = []
-  for i in text.split(" "):
-    list_i = i.split("\n") #split into a list at the new_line
-    for word in list_i:
-      text_words.append(word) # appended words into a text_words list
-  return text_words
+  for x in text.split(" "):
+    x1 = x.split("\n")
+    for word in x1:
+      text_words.append(word)
+  for i in range(0,len(text_words)):
+    if (text_words[i] in censor_list) == True:
+      word_clean = text_words[i]
+      censored_word = ""
+      for x in range(0,len(word_clean)):
+        censored_word = censored_word + "X"
+      text_words[i] = text_words[i].replace(word_clean, censored_word)
+    count = 0
+    for i in range(0,len(text_words)):
+      if (text_words[i] in negative_words) == True:
+        count += 1
+        if count > 2:
+          word_clean = text_words[i]
+          for x in punctuation:
+            word_clean = word_clean.strip(x)
+          censored_word = ""
+          for x in range(0,len(word_clean)):
+            censored_word = censored_word + "X"
+          text_words[i] = text_words[i].replace(word_clean, censored_word)
+  return " ".join(text_words)
 
 
 print(negativity_censor(email_three, proprietary_terms, negative_words))
